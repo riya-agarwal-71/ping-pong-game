@@ -43,4 +43,41 @@
         },8)
     }
     moveball();
+    window.addEventListener('keydown',function(event){
+        var leftnow = p1.getBoundingClientRect().left - gamearea.getBoundingClientRect().left;
+        switch(event.keyCode){
+            case 39:
+                if(leftnow > maxleftforpaddle()){
+                    break;
+                }
+                leftnow = leftnow + 20;
+                p1.style.left = leftnow + 'px';
+                p2.style.left = leftnow + 'px';
+                break;
+            case 37:
+                if(leftnow < 0){
+                    break;
+                }
+                leftnow = leftnow - 20;
+                p1.style.left = leftnow + 'px';
+                p2.style.left = leftnow + 'px';
+                break;
+            case 65:
+                if(leftnow < 0){
+                    break;
+                }
+                leftnow = leftnow - 20;
+                p1.style.left = leftnow + 'px';
+                p2.style.left = leftnow + 'px';
+                break;
+            case 68:
+                if(leftnow > maxleftforpaddle()){
+                    break;
+                }
+                leftnow = leftnow + 20;
+                p1.style.left = leftnow + 'px';
+                p2.style.left = leftnow + 'px';
+                break;
+        }
+    })
 })()
