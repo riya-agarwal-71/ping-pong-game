@@ -2,7 +2,8 @@
     var p1 = document.getElementById("one");
     var p2 = document.getElementById("two");
     var ball = document.getElementById("ball");
-    var gamearea = document.getElementById("gamearea")
+    var gamearea = document.getElementById("gamearea");
+    var scoresection = document.getElementById("score");
     function maxleftforpaddle(){
         return gamearea.offsetWidth - p1.offsetWidth;
     }
@@ -12,17 +13,12 @@
     function maxtopforball(){
         return gamearea.offsetHeight - ball.offsetHeight - p1.offsetHeight;
     }
-    // function topcollupper(){
-    //     return p1.offsetHeight;
-    // }
-    // function topcolllower(){
-    //     return gamearea.offsetHeight - p1.offsetHeight - ball.offsetWidth;
-    // }
     function moveball(){
         var leftchange = 2;
         var topchange = 2;
         var leftnow = ball.getBoundingClientRect().left - gamearea.getBoundingClientRect().left;
         var topnow = ball.getBoundingClientRect().top - gamearea.getBoundingClientRect().top;
+        var score = 0;
         var int = setInterval(function(){
             var paddleleft = p1.getBoundingClientRect().left - gamearea.getBoundingClientRect().left;
             if(leftnow + leftchange <= maxleftforball() && leftnow + leftchange >= 0){
@@ -41,11 +37,12 @@
                 topnow = topnow + topchange;
                 ball.style.top = topnow + 'px';
             }
-            if(topnow == p1.offsetHeight+1 || topnow == maxtopforball()){
-                if(leftnow >= paddleleft+1 && leftnow <= paddleleft + p1.offsetWidth+1){
-                    console.log("continue")
+            if(topnow == p1.offsetHeight+1 || topnow == maxtopforball()-1){
+                if(leftnow >= paddleleft-3 && leftnow <= paddleleft + p1.offsetWidth+3){
+                    score++;
+                    scoresection.innerHTML = score;
                 }else{
-                    alert("game over!");
+                    alert("game over! your score is " + score + "\nThe max score is by " + "xyz" + " which is " + score);
                     clearInterval(int);
                 }
             }
