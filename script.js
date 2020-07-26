@@ -1,4 +1,29 @@
-(function(){
+window.addEventListener("keyup",function(event){
+    switch(event.keyCode){
+        case 13:
+            var name = document.getElementById("name").value;
+            if(name == ""){
+                alert("Enter name to start !!")
+            }else{
+                startgame(name);
+            }
+            break;
+    }
+})
+
+function defaultposition(){
+    var p1 = document.getElementById("one");
+    var p2 = document.getElementById("two");
+    var ball = document.getElementById("ball");
+    var gamearea = document.getElementById("gamearea");
+    var middle = gamearea.offsetWidth/2;
+    middle = middle + gamearea.getBoundingClientRect().left;
+    p1.style.left = (middle - (p1.offsetWidth)/2) + 'px';
+    p2.style.left = (middle - (p1.offsetWidth)/2) + 'px';
+    ball.style.left = (middle - (ball.offsetWidth)/2) + 'px';
+}
+defaultposition();
+function startgame(name){
     var p1 = document.getElementById("one");
     var p2 = document.getElementById("two");
     var ball = document.getElementById("ball");
@@ -37,13 +62,23 @@
                 topnow = topnow + topchange;
                 ball.style.top = topnow + 'px';
             }
-            if(topnow == p1.offsetHeight+1 || topnow == maxtopforball()-1){
+            if(topnow <= p1.offsetHeight + 1 || topnow >= maxtopforball() - 1){
                 if(leftnow >= paddleleft-3 && leftnow <= paddleleft + p1.offsetWidth+3){
                     score++;
                     scoresection.innerHTML = score;
                 }else{
-                    alert("game over! your score is " + score + "\nThe max score is by " + "xyz" + " which is " + score);
                     clearInterval(int);
+                    scoresection.innerHTML = 0;
+                    defaultposition();
+                    var maxscore = localStorage.getItem("score");
+                    var maxscorername = localStorage.getItem("name");
+                    if(maxscore == undefined || score > Number(maxscore)){
+                        alert("CONGRATULATIONS !! \n You have set the new high score which is " + score);
+                        localStorage.setItem("score",score);
+                        localStorage.setItem("name",name);
+                    }else{
+                        alert("game over! your score is " + score + "\nThe max score is by " + maxscorername + " which is " + maxscore);
+                    }
                 }
             }
         },10)
@@ -86,4 +121,4 @@
                 break;
         }
     })
-})()
+}
