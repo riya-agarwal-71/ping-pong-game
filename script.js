@@ -12,19 +12,20 @@
     function maxtopforball(){
         return gamearea.offsetHeight - ball.offsetHeight - p1.offsetHeight;
     }
-    function topcollupper(){
-        return p1.offsetHeight;
-    }
-    function topcolllower(){
-        return gamearea.offsetHeight - p1.offsetHeight - ball.offsetWidth;
-    }
+    // function topcollupper(){
+    //     return p1.offsetHeight;
+    // }
+    // function topcolllower(){
+    //     return gamearea.offsetHeight - p1.offsetHeight - ball.offsetWidth;
+    // }
     function moveball(){
         var leftchange = 2;
         var topchange = 2;
         var leftnow = ball.getBoundingClientRect().left - gamearea.getBoundingClientRect().left;
         var topnow = ball.getBoundingClientRect().top - gamearea.getBoundingClientRect().top;
         var int = setInterval(function(){
-            if(leftnow + leftchange < maxleftforball() && leftnow + leftchange > 0){
+            var paddleleft = p1.getBoundingClientRect().left - gamearea.getBoundingClientRect().left;
+            if(leftnow + leftchange <= maxleftforball() && leftnow + leftchange >= 0){
                 leftnow = leftnow + leftchange;
                 ball.style.left = leftnow + 'px';
             }else{
@@ -32,7 +33,7 @@
                 leftnow = leftnow + leftchange;
                 ball.style.left = leftnow + 'px';
             }
-            if(topnow + topchange < maxtopforball() && topnow + topchange > p1.offsetHeight){
+            if(topnow + topchange <= maxtopforball() && topnow + topchange >= p1.offsetHeight){
                 topnow = topnow + topchange;
                 ball.style.top = topnow + 'px';
             }else{
@@ -40,7 +41,15 @@
                 topnow = topnow + topchange;
                 ball.style.top = topnow + 'px';
             }
-        },8)
+            if(topnow == p1.offsetHeight+1 || topnow == maxtopforball()){
+                if(leftnow >= paddleleft+1 && leftnow <= paddleleft + p1.offsetWidth+1){
+                    console.log("continue")
+                }else{
+                    alert("game over!");
+                    clearInterval(int);
+                }
+            }
+        },10)
     }
     moveball();
     window.addEventListener('keydown',function(event){
