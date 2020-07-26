@@ -25,6 +25,7 @@
     box-sizing: border-box;
     border:1px solid black;
     position:relative;
+    overflow:hidden;
 }
 .paddle{
     position:absolute;
